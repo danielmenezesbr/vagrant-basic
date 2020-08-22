@@ -11,6 +11,10 @@ install:
 #  - sudo dpkg -i virtualbox-5.2_5.2.22-126460~Ubuntu~bionic_amd64.deb
 #  - sudo cat /var/log/vbox-setup.log
   - sudo apt-get -y install virtualbox-5.2
+  - sudo vagrant box add cdaf/WindowsServerDC --provider virtualbox --box-version 2020.05.14
+  - sudo pwd
+  - sudo ls -lR
+  - sudo sed -i 's/<Display controller="VBoxSVGA" VRAMSize="128"/>//g' ./
 build_script:
   - vboxmanage --version
   - sh: |
