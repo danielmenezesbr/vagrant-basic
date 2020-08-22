@@ -7,7 +7,7 @@ install:
   - sudo dpkg -i vagrant_2.2.9_x86_64.deb
   - sudo vagrant plugin install vagrant-libvirt vagrant-scp vagrant-reload vagrant-vbguest
 build_script:
-  - sudo vagrant up --provider=libvirt
+  - sudo vagrant up --provider=virtualbox
   - sudo vagrant ssh -- echo "hello world"
   - sudo vagrant halt
   - sudo vagrant destroy --force
