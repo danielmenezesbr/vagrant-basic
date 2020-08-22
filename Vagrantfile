@@ -24,8 +24,8 @@ Vagrant.configure("2") do |config|
     config.winrm.password = "vagrant"
     config.vm.guest = :windows
     config.vm.communicator = "winrm"
-    config.winrm.timeout = 1800 # 30 minutes
-    config.winrm.max_tries = 20
+    config.winrm.timeout = 2800 # 30 minutes
+    config.winrm.max_tries = 40
     config.winrm.retry_limit = 200
     config.winrm.retry_delay = 10
     config.vm.graceful_halt_timeout = 600
@@ -71,6 +71,6 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.box_check_update = false
-  config.vm.boot_timeout = 1200 # 20 minutes
+  config.vm.boot_timeout = 2800
 
 end
