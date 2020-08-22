@@ -8,7 +8,7 @@ install:
 #  - sudo vagrant box add cdaf/WindowsServerDC --provider virtualbox --box-version 2020.05.14
   - sudo vagrant box add minimal/xenial64
   - sudo pwd
-  - sudo ls -lR
+  - sudo ls -lR /home/appveyor
   - sudo sed -i 's/<Display controller="VBoxSVGA" VRAMSize="128"/>//g' ./.vagrant.d/boxes/cdaf-VAGRANTSLASH-WindowsServerDC/2020.05.14/virtualbox/box.ovf
   - sudo cat ./.vagrant.d/boxes/cdaf-VAGRANTSLASH-WindowsServerDC/2020.05.14/virtualbox/box.ovf
   - sudo vagrant plugin install vagrant-scp vagrant-reload vagrant-vbguest
