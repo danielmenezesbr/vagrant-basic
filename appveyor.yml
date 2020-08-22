@@ -20,7 +20,7 @@ build_script:
   - sh: |
       until sudo vagrant up dc --provider=virtualbox --debug
       do
-        sudo vagrant destroy --force
+        sudo vagrant reload
         echo "Try again"
       done
 test: off
