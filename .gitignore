@@ -1,1 +1,6 @@
-.vagrant
+*.keytab
+*.bin
+.idea/
+.vagrant/
+puppet-weblogic/software/*.jar
+puppet-weblogic/software/*.tar.gz

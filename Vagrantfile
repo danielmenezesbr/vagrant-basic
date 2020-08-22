@@ -1,58 +1,74 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
+$domain = "mshome.net"
+$domain_ip_address = "192.168.56.2"
+$ubuntu_ip_address = "192.168.56.14"
+
+unless Vagrant.has_plugin?("vagrant-vbguest")
+  puts 'Installing vagrant-vbguest Plugin...'
+  system('vagrant plugin install vagrant-vbguest')
+end
+
+unless Vagrant.has_plugin?("vagrant-reload")
+  puts 'Installing vagrant-reload Plugin...'
+  system('vagrant plugin install vagrant-reload')
+end
 
 Vagrant.configure("2") do |config|
-  config.vagrant.plugins = ["vagrant-reload", "vagrant-scp"]
 
-  config.vm.define "centos-box" do |centos_box|
-    centos_box.vm.box = "centos/7"
-    centos_box.vm.box_version = "2004.01"
-    centos_box.vm.hostname = "centos-box"
+  config.vm.define "dc" do |config|
+    config.vm.box = "cdaf/WindowsServerDC"
+    config.vm.box_version = "2020.05.14"
 
-    centos_box.vm.provider "libvirt" do |v, override|
-      override.vagrant.plugins = config.vagrant.plugins + ["vagrant-libvirt"]
-      override.vm.box_download_checksum_type = "sha256"
-      override.vm.box_download_checksum = "48e14597e88a0663b1748ac2239de6fea5e9976687f5c57b1ba2480612a0b154"
-      v.cpus = "2"
-      v.cputopology sockets: "1", cores: "2", threads: "1"
-      v.memory = "2048"
-      v.disk_bus = "virtio"
-      v.nic_model_type = "virtio-net-pci"
-      v.nested = false
-      v.cpu_mode = "host-model"
-      v.cpu_fallback = "allow"
-      v.graphics_type = "none"
-      v.kvm_hidden = "false"
-      v.machine_type = "pc-i440fx-2.11"
-      v.machine_arch = "x86_64"
-      v.autostart = false
+    config.winrm.username = "vagrant"
+    config.winrm.password = "vagrant"
+    config.vm.guest = :windows
+    config.vm.communicator = "winrm"
+    config.winrm.timeout = 1800 # 30 minutes
+    config.winrm.max_tries = 20
+    config.winrm.retry_limit = 200
+    config.winrm.retry_delay = 10
+    config.vm.graceful_halt_timeout = 600
+
+    config.vm.hostname = "winserver"
+    config.vm.network "private_network", ip: "192.168.56.2"
+    config.vm.provision "shell", path: "provision/uninstall-windefeder.ps1"
+    config.vm.provision "shell", reboot: true
+    config.vm.provision "shell", path: "provision/ad.ps1"
+    config.vm.provision "ie", type: "shell", path: "provision/ie.ps1"
+
+    config.vm.provider :virtualbox do |v, override|
+      v.memory = 1024
+	  v.cpus = 1
+	  v.gui = false #TODO
+	  v.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
     end
 
-    centos_box.vm.provider "virtualbox" do |v, override|
-      override.vagrant.plugins = config.vagrant.plugins + ["vagrant-vbguest"]
-      override.vbguest.auto_update = false
-      override.vm.box_download_checksum_type = "sha256"
-      override.vm.box_download_checksum = "7e83943defcb5c4e9bebbe4184cce4585c82805a15e936b01b1e893b63dee2c5"
-      override.vm.network "private_network", type: "dhcp"
-      v.name = "centos-box"
-      v.gui = false
-      v.cpus = "2"
-      v.memory = "2048"
-      v.linked_clone = true
-      v.customize ['modifyvm', :id, '--graphicscontroller', 'vmsvga']
-      v.customize ['modifyvm', :id, '--audio', 'none']
-    end
-
-    centos_box.vm.provider "hyperv" do |v, override|
-      override.vagrant.plugins = config.vagrant.plugins + ["vagrant-vbguest"]
-      override.vbguest.auto_update = false
-      override.vm.box_download_checksum_type = "sha256"
-      override.vm.box_download_checksum = "51bb0495a2c01f25ed511ab02608d05c868285d17372be4efedd798f9ac1c81f"
-      v.maxmemory = "2048"
-      v.cpus = "2"
-      v.memory = "2048"
-    end
-
-    centos_box.vm.synced_folder ".", "/vagrant", type: "rsync", rsync__exclude: ['.git/']
+	config.vbguest.auto_update = false
   end
+
+  config.vm.define "client" do |config|
+    config.vm.box = "bento/ubuntu-18.04"
+    config.vm.box_version = "202005.21.0"
+	#config.vm.box = "ubuntu/bionic64"
+    #config.vm.box_version = "20200610.1.0"
+
+    config.vm.provider :virtualbox do |v, override|
+      v.memory = 3000
+	  v.cpus = 2
+    end
+
+    config.vm.hostname = "clientlinux.#{$domain}"
+    config.vm.network "private_network", ip: $ubuntu_ip_address, libvirt__forward_mode: "route", libvirt__dhcp_enabled: false
+    config.vm.provision "shell", path: "provision/clientlinux/provision/provision-base.sh"
+    config.vm.provision "shell", path: "provision/clientlinux/provision/add-to-domain.sh", args: [$domain, $domain_ip_address]
+    config.vm.provision :reload
+    config.vm.provision "ansible_local" do |ansible|
+      ansible.playbook = "provision/clientlinux/provision/playbook.yml"
+    end
+  end
+
+  config.vm.box_check_update = false
+  config.vm.boot_timeout = 1200 # 20 minutes
+
 end
