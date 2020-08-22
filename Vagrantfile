@@ -42,6 +42,8 @@ Vagrant.configure("2") do |config|
 	  v.cpus = 1
 	  v.gui = false #TODO
 	  v.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
+	  v.customize ["modifyvm", :id, "--nictype1", "Am79C973"]
+      v.customize ['modifyvm', :id, '--cableconnected1', 'on']
     end
 
 	config.vbguest.auto_update = false
