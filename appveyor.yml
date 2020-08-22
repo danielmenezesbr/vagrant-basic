@@ -7,9 +7,10 @@ install:
   - sudo dpkg -i vagrant_2.2.9_x86_64.deb
   - sudo vagrant plugin install vagrant-scp vagrant-reload vagrant-vbguest
   - sudo apt-get -y remove --purge virtualbox-6.1
-  - sudo wget -nv https://download.virtualbox.org/virtualbox/5.2.22/virtualbox-5.2_5.2.22-126460~Ubuntu~bionic_amd64.deb
-  - sudo dpkg -i virtualbox-5.2_5.2.22-126460~Ubuntu~bionic_amd64.deb
-  - sudo cat /var/log/vbox-setup.log
+#  - sudo wget -nv https://download.virtualbox.org/virtualbox/5.2.22/virtualbox-5.2_5.2.22-126460~Ubuntu~bionic_amd64.deb
+#  - sudo dpkg -i virtualbox-5.2_5.2.22-126460~Ubuntu~bionic_amd64.deb
+#  - sudo cat /var/log/vbox-setup.log
+  - sudo apt-get -y install virtualbox-5.2
 build_script:
   - vboxmanage --version
   - sh: |
