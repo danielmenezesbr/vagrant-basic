@@ -7,5 +7,9 @@ install:
   - sudo dpkg -i vagrant_2.2.9_x86_64.deb
   - sudo vagrant plugin install vagrant-libvirt vagrant-scp vagrant-reload vagrant-vbguest
 build_script:
-  - sudo vagrant up dc --provider=virtualbox
+  - sh: |
+      until sudo vagrant up dc --provider=virtualbox
+      do
+        echo "Try again"
+      done
 test: off
