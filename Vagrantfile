@@ -6,7 +6,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "centos-box" do |centos_box|
     centos_box.vm.box = "ubuntu/bionic64"
-    centos_box.vm.box_version = "v20200821.1.0"
+    #centos_box.vm.box_version = "v20200821.1.0"
     centos_box.vm.hostname = "centos-box"
 
     centos_box.vm.provider "libvirt" do |v, override|
@@ -31,8 +31,8 @@ Vagrant.configure("2") do |config|
     centos_box.vm.provider "virtualbox" do |v, override|
       override.vagrant.plugins = config.vagrant.plugins + ["vagrant-vbguest"]
       override.vbguest.auto_update = false
-      override.vm.box_download_checksum_type = "sha256"
-      override.vm.box_download_checksum = "7e83943defcb5c4e9bebbe4184cce4585c82805a15e936b01b1e893b63dee2c5"
+      #override.vm.box_download_checksum_type = "sha256"
+      #override.vm.box_download_checksum = "7e83943defcb5c4e9bebbe4184cce4585c82805a15e936b01b1e893b63dee2c5"
       override.vm.network "private_network", type: "dhcp"
       v.name = "centos-box"
       v.gui = false
