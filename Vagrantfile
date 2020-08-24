@@ -5,8 +5,8 @@ Vagrant.configure("2") do |config|
   config.vagrant.plugins = ["vagrant-reload", "vagrant-scp"]
 
   config.vm.define "centos-box" do |centos_box|
-    centos_box.vm.box = "centos/7"
-    centos_box.vm.box_version = "2004.01"
+    centos_box.vm.box = "ubuntu/bionic64"
+    centos_box.vm.box_version = "v20200821.1.0"
     centos_box.vm.hostname = "centos-box"
 
     centos_box.vm.provider "libvirt" do |v, override|
