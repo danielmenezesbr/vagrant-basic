@@ -1,6 +1,10 @@
 os: Ubuntu1804
 platform:
   - x64
+environment:
+  APPVEYOR_SSH_KEY: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCsSZJ8qCcvnQTmJW26zjuhNt2wsATaylpXNjGG/3hay68By945dpmLpmJ33DVqFZitcdv00jRD4MkTFze4l2fZUr8LMg1KgQBKKDSOOEBQukhDa1kr45nAr8hZXOcKH3IrZm+w2YQnhqDntK1qinyiOrE83GDDjSPzVGGw6VWpAL6ZY/0bJr9K6GANoN5V3aWJm0UOwhohfiMjsTIxJL12QCOY0HMpRDMMB2ux3B/BSKCBJMCvkpmMwRNwFQ3koGUxYV8uWK4nsIKck8uhNfGA7QOux8fFCEWXhDVGogR6x+KFL1DI4ZvAVWr3k620DYD/8bCDL+TOHBP+btaMamGr appveyor
+init:
+  - sh: curl -sflL 'https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-ssh.sh' | bash -e -
 install:
   - sudo apt-get update && sudo apt-get install -y bridge-utils dnsmasq-base ebtables libvirt-bin libvirt-dev qemu-kvm qemu-utils ruby-dev
   - sudo wget -nv https://releases.hashicorp.com/vagrant/2.2.9/vagrant_2.2.9_x86_64.deb
