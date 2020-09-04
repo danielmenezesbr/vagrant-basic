@@ -2,16 +2,18 @@ os: Ubuntu1804
 platform:
   - x64
 install:
-  - sudo apt-get update && sudo apt-get install -y bridge-utils dnsmasq-base ebtables libvirt-bin libvirt-dev qemu-kvm qemu-utils ruby-dev
+#  - sudo apt-get update && sudo apt-get install -y bridge-utils dnsmasq-base ebtables libvirt-bin libvirt-dev qemu-kvm qemu-utils ruby-dev
+  - sudo apt-get update && sudo apt-get install -y bridge-utils dnsmasq-base ebtables ruby-dev
   - sudo wget -nv https://releases.hashicorp.com/vagrant/2.2.9/vagrant_2.2.9_x86_64.deb
   - sudo dpkg -i vagrant_2.2.9_x86_64.deb
-  - sudo vagrant box add cdaf/WindowsServerDC --provider virtualbox --box-version 2020.05.14
+#  - sudo vagrant box add cdaf/WindowsServerDC --provider virtualbox --box-version 2020.05.14
+  - sudo vagrant box add https://storage.googleapis.com/vagrantvms/windows-2019-standard-virtualbox.box -OutFile windows-2019-standard-virtualbox.box
   - ls -lR /home/appveyor/.vagrant.d
-  - sudo sed -i 's/<Display controller="VBoxSVGA" VRAMSize="128"\/>//g' /home/appveyor/.vagrant.d/boxes/cdaf-VAGRANTSLASH-WindowsServerDC/2020.05.14/virtualbox/box.ovf
-  - sudo cat /home/appveyor/.vagrant.d/boxes/cdaf-VAGRANTSLASH-WindowsServerDC/2020.05.14/virtualbox/box.ovf
-  - sudo vagrant plugin install vagrant-scp vagrant-reload vagrant-vbguest
-  - sudo apt-get -y remove --purge virtualbox-6.1
-  - sudo apt-get -y install virtualbox-5.2
+#  - sudo sed -i 's/<Display controller="VBoxSVGA" VRAMSize="128"\/>//g' /home/appveyor/.vagrant.d/boxes/cdaf-VAGRANTSLASH-WindowsServerDC/2020.05.14/virtualbox/box.ovf
+#  - sudo cat /home/appveyor/.vagrant.d/boxes/cdaf-VAGRANTSLASH-WindowsServerDC/2020.05.14/virtualbox/box.ovf
+#  - sudo vagrant plugin install vagrant-scp vagrant-reload vagrant-vbguest
+#  - sudo apt-get -y remove --purge virtualbox-6.1
+#  - sudo apt-get -y install virtualbox-5.2
 #  - sudo wget -nv https://download.virtualbox.org/virtualbox/5.2.22/virtualbox-5.2_5.2.22-126460~Ubuntu~bionic_amd64.deb
 #  - sudo dpkg -i virtualbox-5.2_5.2.22-126460~Ubuntu~bionic_amd64.deb
 #  - sudo cat /var/log/vbox-setup.log
