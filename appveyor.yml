@@ -10,6 +10,7 @@ install:
   - sudo wget -nv https://releases.hashicorp.com/vagrant/2.2.9/vagrant_2.2.9_x86_64.deb
   - sudo dpkg -i vagrant_2.2.9_x86_64.deb
 #  - sudo vagrant box add cdaf/WindowsServerDC --provider virtualbox --box-version 2020.05.14
+   - sudo vagrant box add https://storage.googleapis.com/vagrantvms/windows-2019-standard-virtualbox.box --name danielmenezesbr/WindowsServerDC
   - ls -lR /home/appveyor/.vagrant.d
 #  - sudo sed -i 's/<Display controller="VBoxSVGA" VRAMSize="128"\/>//g' /home/appveyor/.vagrant.d/boxes/cdaf-VAGRANTSLASH-WindowsServerDC/2020.05.14/virtualbox/box.ovf
 #  - sudo cat /home/appveyor/.vagrant.d/boxes/cdaf-VAGRANTSLASH-WindowsServerDC/2020.05.14/virtualbox/box.ovf
