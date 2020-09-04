@@ -23,7 +23,7 @@ install:
 build_script:
   - vboxmanage --version
   - sh: |
-      until sudo vagrant up dc --provider=virtualbox --debug
+      until sudo vagrant up dc --provider=virtualbox
       do
         sudo vagrant reload
         echo "Try again"
