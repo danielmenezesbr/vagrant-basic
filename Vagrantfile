@@ -17,8 +17,8 @@ end
 Vagrant.configure("2") do |config|
 
   config.vm.define "dc" do |config|
-    config.vm.box = "cdaf/WindowsServerDC"
-    config.vm.box_version = "2020.05.14"
+    config.vm.box = "danielmenezesbr/WindowsServerDC"
+    config.vm.box_version = "0"
 
     config.winrm.username = "vagrant"
     config.winrm.password = "vagrant"
@@ -32,18 +32,18 @@ Vagrant.configure("2") do |config|
 
     config.vm.hostname = "winserver"
     config.vm.network "private_network", ip: "192.168.56.2"
-    config.vm.provision "shell", path: "provision/uninstall-windefeder.ps1"
-    config.vm.provision "shell", reboot: true
-    config.vm.provision "shell", path: "provision/ad.ps1"
-    config.vm.provision "ie", type: "shell", path: "provision/ie.ps1"
+    #config.vm.provision "shell", path: "provision/uninstall-windefeder.ps1"
+    #config.vm.provision "shell", reboot: true
+    #config.vm.provision "shell", path: "provision/ad.ps1"
+    #config.vm.provision "ie", type: "shell", path: "provision/ie.ps1"
 
     config.vm.provider :virtualbox do |v, override|
       v.memory = 1024
-	  v.cpus = 1
+	  v.cpus = 2
 	  v.gui = false #TODO
-	  v.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
-	  v.customize ["modifyvm", :id, "--nictype1", "Am79C973"]
-      v.customize ['modifyvm', :id, '--cableconnected1', 'on']
+	  #v.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
+	  #v.customize ["modifyvm", :id, "--nictype1", "Am79C973"]
+          #v.customize ['modifyvm', :id, '--cableconnected1', 'on']
     end
 
 	config.vbguest.auto_update = false
