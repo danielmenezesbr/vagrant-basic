@@ -42,7 +42,7 @@ Vagrant.configure("2") do |config|
 
     config.vm.provider :virtualbox do |v, override|
       v.memory = 1024
-	  v.cpus = 2
+	  v.cpus = 1
 	  v.gui = false #TODO
 	  #v.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
 	  v.customize ["modifyvm", :id, "--nictype1", "Am79C973"]
