@@ -41,12 +41,12 @@ Vagrant.configure("2") do |config|
     #config.vm.provision "ie", type: "shell", path: "provision/ie.ps1"
 
     config.vm.provider :virtualbox do |v, override|
-      v.memory = 2024
-	  v.cpus = 2
+      v.memory = 1024
+	  v.cpus = 1
 	  v.gui = false #TODO
 	  #v.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
 	  #v.customize ["modifyvm", :id, "--nictype1", "Am79C973"]
-          v.customize ['modifyvm', :id, '--cableconnected1', 'on']
+          #v.customize ['modifyvm', :id, '--cableconnected1', 'on']
     end
 
 	config.vbguest.auto_update = false
